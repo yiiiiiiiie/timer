@@ -1,0 +1,115 @@
+<html>
+<head>
+    <title>计时器</title>
+    <style>
+    #app {
+        width: 175px;
+		height: 175px;
+		border: 25px solid;
+		position: relative;
+        font-size: 25px;
+        text-align:center; 
+        color: black;       
+        border-radius: 88px;
+        margin: 0 auto;
+    }
+
+    #eventContainer {
+		position: relative;
+        top: 25px;
+        color:black;       
+    }
+
+    #dayContainer {
+		position: relative;
+        top: 37px;
+        color:black;       
+    }
+
+    #secondContainer {
+		position: relative;
+        top: 50px;
+        color:black;       
+    }
+
+    #configBox {
+        text-align:center;
+        margin-top: 25px;
+    }
+
+    #buttonBox {
+        text-align:center;
+        margin-top: 25px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id = "eventContainer"></div>
+        <div id = "dayContainer"></div>
+        <div id = "secondContainer"></div>
+    </div>
+
+    <div id = "configBox">
+        事件：<input type="text" id="eventinput" value="开学"/>
+        <br/>
+        年份：<input type="text" id="yearinput" value="2021"/>
+        <br/>
+        月份：<input type="text" id="mounthinput" value="9"/>
+        <br/>
+        日期：<input type="text" id="dayinput" value="1"/>
+        <br/>
+        <div id="buttonBox">
+            <input type="button" value="确定" onclick="refresh()"/>
+        </div>
+    </div>
+
+    <script>
+    var app = document.getElementById("app");
+    var eventContainer = document.getElementById("eventContainer");
+    var dayContainer = document.getElementById("dayContainer");
+    var secondContainer = document.getElementById("secondContainer");
+
+    var eventName
+    var year
+    var mouth
+    var dd
+
+    function refresh() {
+        eventName = document.getElementById("eventinput").value;
+        year = document.getElementById("yearinput").value;
+        mouth = document.getElementById("mounthinput").value;
+        dd = document.getElementById("dayinput").value;
+    }
+
+    function tick() {
+        var target = new Date(year, mouth-1, dd)
+        var now = new Date( );
+    
+        var diff = target.getTime() - now.getTime();
+        diff = diff/1000
+    
+        var second = Math.round(diff%60)
+        diff = parseInt(diff/60)
+    
+        var minute = Math.round(diff%60)
+        diff = parseInt(diff/60)
+    
+        var hour = Math.round(diff%24)
+        diff = parseInt(diff/24)
+    
+        var day = diff
+    
+        eventContainer.innerText = "离" + eventName + "还有"
+        dayContainer.innerText = day + "天" + hour + "小时"
+        secondContainer.innerText = minute + "分钟" + second + "秒"
+    } 
+
+    refresh()
+    tick()
+
+    window.setInterval("tick()", 1000)
+    </script>
+</body>
+</html>
